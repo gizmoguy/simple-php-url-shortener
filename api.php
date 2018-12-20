@@ -103,7 +103,7 @@ function returnError($error, $returnFormat) {
 function checkURL($longURL) {
   global $pdo;
   try {
-    $stmt = $pdo->prepare('SELECT id FROM urlshort WHERE longurl = ? LIMIT 1 OFFSET 0');
+    $stmt = $pdo->prepare('SELECT id FROM urlshort WHERE longurl = ? ORDER BY id LIMIT 1');
     $stmt->execute([$longURL]);
     $result = $stmt->fetch();
   } catch (\PDOException $e) {

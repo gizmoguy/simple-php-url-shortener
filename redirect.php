@@ -5,7 +5,7 @@ require_once('alphaID.inc.php');
 $shortID = alphaID(trim($_REQUEST['id']), true);
 
 try {
-  $stmt = $pdo->prepare('SELECT longurl FROM urlshort WHERE id = ? LIMIT 1 OFFSET 0');
+  $stmt = $pdo->prepare('SELECT longurl FROM urlshort WHERE id = ? ORDER BY id LIMIT 1');
   $stmt->execute([$shortID]);
   $result = $stmt->fetch();
 } catch (\PDOException $e) {
