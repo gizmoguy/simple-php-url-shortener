@@ -1,14 +1,21 @@
-<?php 
+<?php
 // db options
-define('DB_NAME', 'XXXXXX');
-define('DB_USER', 'XXXXXX');
-define('DB_PASSWORD', 'XXXXXX');
-define('DB_HOST', 'localhost');
-define('DB_TABLE', 'urlshort');
+$dsn  = "pgsql:host=localhost;dbname=urlshort";
+$user = "urlshort";
+$pass = "urlshort";
+
+$pdo_options = [
+    PDO::ATTR_ERRMODE            => PDO::ERRMODE_EXCEPTION,
+    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    PDO::ATTR_EMULATE_PREPARES   => false,
+];
 
 // connect to database
-mysql_connect(DB_HOST, DB_USER, DB_PASSWORD);
-mysql_select_db(DB_NAME);
+try {
+   $pdo = new PDO($dsn, $user, $pass, $pdo_options);
+} catch (\PDOException $e) {
+    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+}
 
 // base location of script (include trailing slash)
 define('BASE_HREF', 'http://' . $_SERVER['HTTP_HOST'] . '/' );

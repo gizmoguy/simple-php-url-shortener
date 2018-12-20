@@ -2,9 +2,9 @@
 require_once('config.php');
 require_once('alphaID.inc.php');
 
-$longURL = mysql_real_escape_string(trim($_REQUEST['url'])); // http://google.de
-$returnFormat = mysql_real_escape_string(trim($_REQUEST['format'])); // json, plain
 $callback = $_REQUEST['callback']; // calback for json
+$longURL = trim($_REQUEST['url']); // http://google.de
+$returnFormat = trim($_REQUEST['format']); // json, plain
 
 
 $result->status = true;
@@ -45,9 +45,15 @@ returnData($result, $returnFormat);
 function createShortURL($longURL) {
   $id = checkURL($longURL);
   if(!$id){
-    mysql_query("INSERT INTO ".DB_TABLE." (longurl) VALUES ('".$longURL."')");    
-    $id = mysql_insert_id(); 
-  }  
+    global $pdo;
+    try {
+      $stmt = $pdo->prepare('INSERT INTO urlshort (longurl) VALUES (?)');
+      $stmt->execute([$longURL]);
+      $id = $pdo->lastInsertId();
+    } catch (\PDOException $e) {
+      throw new \PDOException($e->getMessage(), (int)$e->getCode());
+    }
+  }
   $newShortID = alphaID($id);
   return $newShortID;
 }
@@ -94,11 +100,18 @@ function returnError($error, $returnFormat) {
 * @return {String|Bool} Returns a ID > 0 if a ShortURL exists or false if no ShortURL exists
 */
 function checkURL($longURL) {
-  $sql_result = mysql_query("SELECT id FROM ".DB_TABLE." WHERE longurl='".$longURL."' LIMIT 0,1");  
-  if(is_resource($sql_result) && mysql_num_rows($sql_result) > 0 ){
-    $sql_result = mysql_fetch_assoc($sql_result);
-    return $sql_result["id"];
-  }else{
+  global $pdo;
+  try {
+    $stmt = $pdo->prepare('SELECT id FROM urlshort WHERE longurl = ? LIMIT 1 OFFSET 0');
+    $stmt->execute([$longURL]);
+    $result = $stmt->fetch();
+  } catch (\PDOException $e) {
+    throw new \PDOException($e->getMessage(), (int)$e->getCode());
+  }
+
+  if($result['id']) {
+    return $result['id'];
+  } else {
     return false;
   }
 }

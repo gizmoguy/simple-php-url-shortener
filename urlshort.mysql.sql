@@ -31,7 +31,6 @@ CREATE TABLE IF NOT EXISTS `urlshort` (
   `longurl` text NOT NULL,
   `created` timestamp NOT NULL default CURRENT_TIMESTAMP,
   `hits` int(9) NOT NULL default '0',
-  `referer` text NOT NULL,
   `lastused` timestamp NOT NULL default '0000-00-00 00:00:00',
   PRIMARY KEY  (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8 AUTO_INCREMENT=20 ;
