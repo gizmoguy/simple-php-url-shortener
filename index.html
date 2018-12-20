@@ -1,5 +1,5 @@
 ﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="de" lang="de">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <title>URL shortener</title>
 
@@ -134,16 +134,16 @@
   
     <div id="api" class="hide">
       <h2>API</h2>
-      <pre>http://s.my-azur.de/api.php?parameters</pre>
+      <pre>https://sla.ac/a/api.php?parameters</pre>
       
-      <h3>Anfrageparameter</h3>
+      <h3>Parameters</h3>
       
       <ul>
-        <li><code>url</code>: (erforderlich) Die zu k&uuml;rzende URL beginnend mit http://, https:// oder ftp://</li>
+        <li><code>url</code>: (required) The URL to be shortened, must begin with http://, https:// or ftp://</li>
         <li><code>format</code>: (optional)
           <ul>
             <li><code>plain</code> (default) gibt an, dass die Ausgabe als Plain Text erfolgen soll. Es wird nur die URL oder ein Fehlertext ausgegeben.</li>
-            <li><code>json</code> (empfohlen) gibt an, dass die Ausgabe als JSON (JavaScript Object Notation) erfolgen soll. Es werden <code>status(true)</code>, <code>longurl</code>, <code>shortid</code>, <code>shorturl</code> oder im Fehlerfall <code>status(false)</code>, <code>longurl</code> und <code>text</code></li>
+            <li><code>json</code> (recommended) gibt an, dass die Ausgabe als JSON (JavaScript Object Notation) erfolgen soll. Es werden <code>status(true)</code>, <code>longurl</code>, <code>shortid</code>, <code>shorturl</code> oder im Fehlerfall <code>status(false)</code>, <code>longurl</code> und <code>text</code></li>
           </ul>
         </li>
         <li><code>callback</code>: (optional)
@@ -151,12 +151,12 @@
       </ul>
       
       
-      <h3>Beispiel PHP</h3>
-      <pre>$shortenedurl = file_get_contents('http://s.my-azur.de/api.php?url=http://google.de/');</pre>
+      <h3>PHP</h3>
+      <pre>$shortenedurl = file_get_contents('https://sla.ac/a/api.php?url=http://google.com/');</pre>
       
-      <h3>Beispiel Javascript</h3>
-      <pre>$.getJSON('http://s.my-azur.de/api.php?callback=?', {
-  url: 'http://google.de/',
+      <h3>Javascript</h3>
+      <pre>$.getJSON('https://sla.ac/a/api.php?callback=?', {
+  url: 'http://google./',
   format: 'json'
 }, function(res) {
   if(res.status === true) {
@@ -169,8 +169,7 @@
   
   <div class="footer section">
     <div class="divider"></div>
-    <a href="http://my-azur.de" target="_blank">my-azur.de</a> // <a href="https://github.com/sinky/simple-php-url-shortener" target="_blank">fork me</a> // <a href="javascript:(function() { var u='http://s.my-azur.de/?url='+encodeURIComponent(location.href);w=open(u,'');w.focus(); })();" title="URL K&uuml;rzen">Bookmarklet</a>
-		<a href="https://github.com/sinky/simple-php-url-shortener" target="_blank"><img style="position: absolute; top: 0; right: 0; border: 0;" src="http://load.my-azur.de/f/o/github_forkme_orange.png" alt="Fork me on GitHub" class="noshadow"></a>
+    <a href="https://github.com/gizmoguy/simple-php-url-shortener" target="_blank">fork me</a> // <a href="javascript:(function() { var u='https://sla.ac/a/?url='+encodeURIComponent(location.href);w=open(u,'');w.focus(); })();" title="URL K&uuml;rzen">Bookmarklet</a>
   </div>
        
 </div>
@@ -178,7 +177,7 @@
 
 
 
-<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
 <script>window.jQuery || document.write(unescape('%3Cscript src="libs/jquery/jquery.min.js?ver=1.7.2"%3E%3C/script%3E'))</script>
 <script type="text/javascript" src="libs/jquery/jquery.ba-hashchange.min.js"></script>
 <script type="text/javascript" src="libs/jquery/jquery.easytabs.min.js"></script>
