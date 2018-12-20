@@ -1,0 +1,15 @@
+db:
+  image: postgres:9.6
+  ports:
+    - "5432"
+  environment:
+    - POSTGRES_USER=urlshort
+    - POSTGRES_PASSWORD=urlshort
+    - POSTGRES_DB=urlshort
+
+web:
+  build: .
+  ports:
+    - "80:80"
+  links:
+    - db
