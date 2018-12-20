@@ -1,12 +1,13 @@
-<?php 
+<?php
 require_once('config.php');
 require_once('alphaID.inc.php');
 
-$callback = $_REQUEST['callback']; // calback for json
 $longURL = trim($_REQUEST['url']); // http://google.de
 $returnFormat = trim($_REQUEST['format']); // json, plain
+$callback = isset($_REQUEST['callback']) ? $_REQUEST['callback'] : null; // calback for json
 
 
+$result = new stdClass();
 $result->status = true;
 $result->longurl = $longURL;
 
@@ -36,12 +37,12 @@ returnData($result, $returnFormat);
 
 /* = Functions
  * ==========================================================*/
- 
+
 /**
 * Get ShortURL ID
 * @param {String} A Long URL to shorten
 * @return {String}   Returns a string value containing the row id converted with alphaID function
-*/ 
+*/
 function createShortURL($longURL) {
   $id = checkURL($longURL);
   if(!$id){
@@ -70,7 +71,7 @@ function returnData($result, $returnFormat) {
       echo $callback."(".json_encode($result).")";
     }else{
       echo json_encode($result);
-    }    
+    }
   }else{
     echo $result->shorturl;
   }
@@ -85,7 +86,7 @@ function returnError($error, $returnFormat) {
   global $callback;
   if($returnFormat == "json"){
     if(!empty($callback)){
-      echo $callback."(".json_encode($error).")";  
+      echo $callback."(".json_encode($error).")";
     }else{
       echo json_encode($error);
     }
@@ -122,6 +123,5 @@ function checkURL($longURL) {
 * @return {Bool} Returns true if LongURL is valid
 */
 function validURL($url) {
-  $v = "/^(http|https|ftp):\/\/([A-Z0-9][A-Z0-9_-]*(?:\.[A-Z0-9][A-Z0-9_-]*)+):?(\d+)?\/?/i";
-  return (bool)preg_match($v, $url);
+  return filter_var($url, FILTER_VALIDATE_URL);
 }
